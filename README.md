@@ -25,7 +25,7 @@ Dibangun dengan **React + TypeScript**, menggunakan **Redux Toolkit** untuk stat
    cd repo-name
    ```
 
-2. **Clone repository**
+2. **setup environment**
    ```env
    VITE_BACKEND_API = "http://localhost:3000"
    ``

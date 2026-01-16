@@ -12,9 +12,10 @@ export default [
   route("dashboard", "routes/protected-admin.tsx", [
     index("routes/dashboard.tsx"),
   ]),
-  
+
   route("campaign", "routes/protected.tsx", [
     index("routes/campaign.tsx"),
-    route("vote", "routes/vote.tsx")
+    route(":id", "routes/campaign-detail.tsx"),
+    route(":id/vote", "routes/vote.tsx"),
   ]),
 ] satisfies RouteConfig;

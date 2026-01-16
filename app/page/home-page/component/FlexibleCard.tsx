@@ -2,7 +2,7 @@
 
 import { Box, Typography, Paper, useTheme } from "@mui/material";
 import { Children, type ReactNode } from "react";
-import configColor from "~/color/configColor";
+import configColor from "~/config/configColor";
 
 interface FlexibleCard {
   icon: ReactNode;

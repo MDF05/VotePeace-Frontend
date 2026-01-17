@@ -29,6 +29,9 @@ import {
     TextField,
     DialogActions,
     IconButton,
+    Drawer,
+    AppBar,
+    Toolbar
 } from "@mui/material";
 import {
     Dashboard as DashboardIcon,
@@ -44,6 +47,7 @@ import {
     Close as CloseIcon,
     PersonAdd as PersonAddIcon,
     ArrowBack,
+    Menu as MenuIcon,
 } from "@mui/icons-material";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
@@ -85,6 +89,12 @@ export default function DashboardPage() {
     const [detailTab, setDetailTab] = useState("stats"); // stats | voters
     const [campaignStats, setCampaignStats] = useState<any>(null);
     const [campaignVoters, setCampaignVoters] = useState<any[]>([]);
+
+    // Mobile Sidebar State
+    const [mobileOpen, setMobileOpen] = useState(false);
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
 
     React.useEffect(() => {
         const userStr = localStorage.getItem("user");
@@ -201,66 +211,122 @@ export default function DashboardPage() {
         { text: "Voters Log", icon: <PeopleIcon />, value: "voters" },
     ];
 
-    return (
-        <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "#050B1A", color: "white" }}>
-            {/* Sidebar */}
-            <Paper
-                sx={{
-                    width: 260,
-                    bgcolor: "rgba(15,25,40,0.95)",
-                    borderRight: "1px solid rgba(0,200,255,0.1)",
-                    display: { xs: "none", md: "flex" },
-                    flexDirection: "column",
-                    borderRadius: 0,
-                }}
-            >
-                <Box sx={{ p: 3, display: "flex", alignItems: "center", gap: 2 }}>
-                    <DashboardIcon sx={{ color: "cyan", fontSize: 32 }} />
-                    <Typography variant="h6" fontWeight="bold" sx={{ color: "white" }}>
-                        VotePeace
-                    </Typography>
-                </Box>
+    const drawer = (
+        <Box sx={{ height: "100%", display: "flex", flexDirection: "column", bgcolor: "#0f1929", color: "white" }}>
+            <Box sx={{ p: 3, display: "flex", alignItems: "center", gap: 2 }}>
+                <DashboardIcon sx={{ color: "cyan", fontSize: 32 }} />
+                <Typography variant="h6" fontWeight="bold" sx={{ color: "white" }}>
+                    VotePeace
+                </Typography>
+            </Box>
 
-                <List sx={{ flex: 1, px: 2 }}>
-                    {navItems.map((item) => (
-                        <ListItem key={item.text} disablePadding sx={{ mb: 1 }}>
-                            <ListItemButton
-                                selected={currentTab === item.value}
-                                onClick={() => setCurrentTab(item.value)}
-                                sx={{
-                                    borderRadius: 2,
-                                    "&.Mui-selected": {
-                                        bgcolor: "rgba(0,200,255,0.1)",
-                                        color: "cyan",
-                                        "&:hover": { bgcolor: "rgba(0,200,255,0.15)" },
-                                    },
-                                    "&:hover": {
-                                        bgcolor: "rgba(255,255,255,0.05)",
-                                        color: "white",
-                                    },
-                                    color: currentTab === item.value ? "cyan" : "rgba(255,255,255,0.6)",
-                                }}
-                            >
-                                <ListItemIcon sx={{ color: "inherit" }}>{item.icon}</ListItemIcon>
-                                <ListItemText primary={item.text} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List>
-
-                <Divider sx={{ borderColor: "rgba(255,255,255,0.1)" }} />
-                <List sx={{ px: 2 }}>
-                    <ListItem disablePadding>
-                        <ListItemButton onClick={handleLogout} sx={{ borderRadius: 2, color: "#ff4d4f" }}>
-                            <ListItemIcon sx={{ color: "#ff4d4f" }}><LogoutIcon /></ListItemIcon>
-                            <ListItemText primary="Logout" />
+            <List sx={{ flex: 1, px: 2 }}>
+                {navItems.map((item) => (
+                    <ListItem key={item.text} disablePadding sx={{ mb: 1 }}>
+                        <ListItemButton
+                            selected={currentTab === item.value}
+                            onClick={() => {
+                                setCurrentTab(item.value);
+                                setMobileOpen(false); // Close drawer on mobile click
+                            }}
+                            sx={{
+                                borderRadius: 2,
+                                "&.Mui-selected": {
+                                    bgcolor: "rgba(0,200,255,0.1)",
+                                    color: "cyan",
+                                    "&:hover": { bgcolor: "rgba(0,200,255,0.15)" },
+                                },
+                                "&:hover": {
+                                    bgcolor: "rgba(255,255,255,0.05)",
+                                    color: "white",
+                                },
+                                color: currentTab === item.value ? "cyan" : "rgba(255,255,255,0.6)",
+                            }}
+                        >
+                            <ListItemIcon sx={{ color: "inherit" }}>{item.icon}</ListItemIcon>
+                            <ListItemText primary={item.text} />
                         </ListItemButton>
                     </ListItem>
-                </List>
-            </Paper>
+                ))}
+            </List>
+
+            <Divider sx={{ borderColor: "rgba(255,255,255,0.1)" }} />
+            <List sx={{ px: 2 }}>
+                <ListItem disablePadding>
+                    <ListItemButton onClick={handleLogout} sx={{ borderRadius: 2, color: "#ff4d4f" }}>
+                        <ListItemIcon sx={{ color: "#ff4d4f" }}><LogoutIcon /></ListItemIcon>
+                        <ListItemText primary="Logout" />
+                    </ListItemButton>
+                </ListItem>
+            </List>
+        </Box>
+    );
+
+    return (
+        <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "#050B1A", color: "white" }}>
+            {/* Mobile Header */}
+            <AppBar
+                position="fixed"
+                sx={{
+                    display: { xs: "flex", md: "none" },
+                    bgcolor: "rgba(15,25,40,0.95)",
+                    borderBottom: "1px solid rgba(255,255,255,0.1)",
+                    backdropFilter: "blur(10px)",
+                    zIndex: (theme) => theme.zIndex.drawer + 1
+                }}
+                elevation={0}
+            >
+                <Toolbar>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={handleDrawerToggle}
+                        sx={{ mr: 2, color: "cyan" }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" noWrap component="div" fontWeight="bold">
+                        VotePeace Dashboard
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+
+            {/* Sidebar (Desktop & Mobile) */}
+            <Box
+                component="nav"
+                sx={{ width: { md: 260 }, flexShrink: { md: 0 } }}
+                aria-label="mailbox folders"
+            >
+                {/* Mobile Drawer */}
+                <Drawer
+                    variant="temporary"
+                    open={mobileOpen}
+                    onClose={handleDrawerToggle}
+                    ModalProps={{ keepMounted: true }}
+                    sx={{
+                        display: { xs: "block", md: "none" },
+                        "& .MuiDrawer-paper": { boxSizing: "border-box", width: 260, bgcolor: "#0f1929", borderRight: "1px solid rgba(255,255,255,0.1)" },
+                    }}
+                >
+                    {drawer}
+                </Drawer>
+
+                {/* Desktop Permanent Drawer */}
+                <Drawer
+                    variant="permanent"
+                    sx={{
+                        display: { xs: "none", md: "block" },
+                        "& .MuiDrawer-paper": { boxSizing: "border-box", width: 260, bgcolor: "rgba(15,25,40,0.95)", borderRight: "1px solid rgba(0,200,255,0.1)" },
+                    }}
+                    open
+                >
+                    {drawer}
+                </Drawer>
+            </Box>
 
             {/* Main Content */}
-            <Box sx={{ flex: 1, p: 4, height: "100vh", overflowY: "auto" }}>
+            <Box component="main" sx={{ flexGrow: 1, p: { xs: 2, md: 4 }, width: { md: `calc(100% - 260px)` }, pt: { xs: 10, md: 4 }, height: "100vh", overflowY: "auto" }}>
 
                 {/* CAMPAIGN DETAIL VIEW */}
                 {viewCampaignId ? (
@@ -660,8 +726,10 @@ export default function DashboardPage() {
                                                     bgcolor: "rgba(255,255,255,0.03)",
                                                     border: "1px solid rgba(255,255,255,0.05)",
                                                     borderRadius: 4,
+                                                    borderRadius: 4,
                                                     display: "flex",
-                                                    alignItems: "center",
+                                                    flexDirection: { xs: "column", md: "row" },
+                                                    alignItems: { xs: "flex-start", md: "center" },
                                                     gap: 4,
                                                     cursor: "pointer",
                                                     transition: "all 0.2s",
@@ -697,7 +765,7 @@ export default function DashboardPage() {
                                                 </Box>
 
                                                 {/* Right: Stats */}
-                                                <Box sx={{ width: 300, display: { xs: "none", md: "block" } }}>
+                                                <Box sx={{ width: { xs: "100%", md: 300 }, display: { xs: "flex", md: "block" }, flexDirection: "column", mt: { xs: 2, md: 0 } }}>
                                                     <Box display="flex" justifyContent="space-between" mb={1}>
                                                         <Typography variant="body2" color="gray">Participation Rate</Typography>
                                                         <Typography variant="body2" fontWeight="bold" color="#00C8FF">

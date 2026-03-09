@@ -20,4 +20,9 @@ export const registerSchema = z.object({
 // sdjflksdjflkdsjfl;sdkkfjds
 // sflsjdkfljdsfjsdlfkjdsl;f;jdsfksd
 // dskfkjsdlkfjldsk
+// sjfljdsklfjdsklfjskd;ljflk;dsj
+// dsjfklsdjfldsfjdsklfjdskl
+// sdjflksdjflkdsjfl;sdkkfjds
+// sflsjdkfljdsfjsdlfkjdsl;f;jdsfksd
+// dskfkjsdlkfjldsk
 export type RegisterSchema = z.infer<typeof registerSchema>;

@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import configColor from "~/color/configColor";
+import configColor from "~/config/configColor";
 import { type ReactNode } from "react";
 
 interface ButtonComponentProps {

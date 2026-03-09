@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { type ReactNode } from "react";
-import configColor from "~/color/configColor";
+import configColor from "~/config/configColor";
 
 interface FlexibleBoxProps {
   children: string;

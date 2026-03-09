@@ -3,20 +3,25 @@ import RocketLauncherText from "./component/RocketLauncerText";
 import TypographyVote from "./component/TypographyVote";
 import HeroDescription from "./component/HeroDescription";
 import ButtonComponent from "~/component/ButtonComponent";
-import configColor from "~/color/configColor";
+import configColor from "~/config/configColor";
 import TrustText from "./component/TrustText";
 import FlexibleCard from "./component/FlexibleCard";
 import GroupIcon from "@mui/icons-material/Group";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import InsightsIcon from "@mui/icons-material/Insights";
+import { useNavigate } from "react-router-dom";
 
 import WhyChooseVotePeace from "./component/TypographyChoose";
 import FlexibleCardChoice from "./component/FlexibleCardChoice";
 import CallToActionVoters from "./CallToActionVoters";
+import Navbar from "~/component/Navbar";
 
 export default function HeroSection() {
+  const navigate = useNavigate();
+
   return (
     <Box>
+      <Navbar />
       <Box
         display={"grid"}
         width={"full"}
@@ -40,6 +45,7 @@ export default function HeroSection() {
             <ButtonComponent
               backgroundComponent={configColor.colorYoungBlue1}
               backgroundHover={configColor.colorYoungBlue2}
+              onClick={() => navigate("/login")}
             >
               Start Voting
             </ButtonComponent>
@@ -47,6 +53,7 @@ export default function HeroSection() {
               backgroundComponent={configColor.tranparent}
               backgroundHover={configColor.colorYoungBlue1}
               border={`2px solid ${configColor.colorYoungBlue1}`}
+              onClick={() => navigate("/dashboard")}
             >
               View Voting
             </ButtonComponent>
@@ -59,7 +66,7 @@ export default function HeroSection() {
         <Box gridArea={"section2"}>
           <Box
             component="img"
-            src="/public/homepage-image.jpg"
+            src="/homepage-image.jpg"
             alt="Student Voting ilustration"
             borderRadius={"20px"}
           />

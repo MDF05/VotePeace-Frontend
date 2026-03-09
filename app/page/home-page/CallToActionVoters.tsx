@@ -1,5 +1,5 @@
 import { Box, Typography, Button, Stack } from "@mui/material";
-import configColor from "~/color/configColor";
+import configColor from "~/config/configColor";
 
 export default function CallToActionVoters() {
   return (

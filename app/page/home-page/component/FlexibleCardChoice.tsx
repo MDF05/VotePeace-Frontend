@@ -2,7 +2,7 @@ import { Box, Grid, Card, CardContent, Typography } from "@mui/material";
 import SecurityIcon from "@mui/icons-material/Security";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
-import configColor from "~/color/configColor";
+import configColor from "~/config/configColor";
 
 const features = [
   {

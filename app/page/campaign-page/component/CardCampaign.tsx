@@ -1,6 +1,8 @@
 import { Card, CardContent, Typography, Box, Avatar } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 interface CampaignCardTypes {
+  id?: number | string;
   logo: string;
   name: string;
   duration: string;
@@ -8,13 +10,17 @@ interface CampaignCardTypes {
 }
 
 export default function CampaignCard({
+  id = 1, // Default ID for now
   logo,
   name,
   duration,
   address,
 }: CampaignCardTypes) {
+  const navigate = useNavigate();
+
   return (
     <Card
+      onClick={() => navigate(`/campaign/${id}`)}
       sx={{
         bgcolor: "transparent",
         border: "1px solid rgba(0, 200, 255, 0.3)",
@@ -26,7 +32,11 @@ export default function CampaignCard({
         p: 3,
         cursor: "pointer",
         transition: "0.3s",
-        width: "30%",
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
         "&:hover": {
           boxShadow: "0 0 25px rgba(0, 200, 255, 0.6)",
           transform: "translateY(-5px)",

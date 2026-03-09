@@ -36,13 +36,18 @@ export default function LoginPage() {
         loginAsync(data)
       ).unwrap();
 
+      console.log("Login Response:", dataResponse); // DEBUG
+
       if (
         dataResponse.status === 200 &&
         dataResponse.succes &&
         dataResponse.content.token
       ) {
+        console.log("Setting cookie token:", dataResponse.content.token); // DEBUG
         Cookies.set("token", dataResponse.content.token);
         navigate("/campaign");
+      } else {
+        console.error("Login conditions failed", dataResponse); // DEBUG
       }
     } catch (error) {
       console.error("Login failed", error);

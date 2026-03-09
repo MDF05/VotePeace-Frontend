@@ -1,11 +1,24 @@
 import { Navigate, Outlet } from "react-router";
 import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 
 export default function ProtectedRoute() {
-  const token = Cookies.get("token");
+  const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
 
-  if (!token) {
-    return <Navigate to={"/"} />;
+  useEffect(() => {
+    const token = Cookies.get("token");
+    console.log("Protected Route Check - Token:", token); // DEBUG
+    if (token) {
+      setIsAuthorized(true);
+    } else {
+      setIsAuthorized(false);
+    }
+  }, []);
+
+  if (isAuthorized === null) return null; // Loading
+
+  if (!isAuthorized) {
+    return <Navigate to={"/"} replace />;
   }
 
   return <Outlet />;

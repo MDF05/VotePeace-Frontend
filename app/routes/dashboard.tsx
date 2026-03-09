@@ -1,13 +1,13 @@
-import Box from "@mui/material/Box";
 import type { Route } from "./+types/home";
+import DashboardPage from "~/page/dashboard-page/DashboardPage";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Admin Dashboard" },
+    { name: "description", content: "VotePeace Admin Dashboard" },
   ];
 }
 
-export default function dashboard() {
-  return <Box color={"red"}>dashboard</Box>;
+export default function Dashboard() {
+  return <DashboardPage />;
 }

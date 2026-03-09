@@ -1,4 +1,3 @@
-
 import { z } from "zod";
 
 export const registerSchema = z.object({
@@ -15,5 +14,11 @@ export const registerSchema = z.object({
     .min(6, "Password must be at least 6 characters")
     .max(100, "Password too long"),
 });
+
+const data = {
+  nik: "1234567890123456",
+  name: "John Doe",
+  password: "password123",
+};
 
 export type RegisterSchema = z.infer<typeof registerSchema>;

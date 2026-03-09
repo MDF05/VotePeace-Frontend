@@ -15,4 +15,6 @@ export const registerSchema = z.object({
     .max(100, "Password too long"),
 });
 
+// sjfljdsklfjdsklfjskd;ljflk;dsj
+
 export type RegisterSchema = z.infer<typeof registerSchema>;
